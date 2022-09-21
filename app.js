@@ -1,6 +1,13 @@
 const express = require('express')
 const app = express()
 const {products} = require('./data')
+const logger = require('./logger')
+const authorize = require('./authorize')
+
+const morgan = require('morgan')
+
+
+app.use(morgan('tiny'))
 
 app.get('/', (req,res) => {
     const newProducts = products.map((product) => {
@@ -9,6 +16,11 @@ app.get('/', (req,res) => {
     })
     res.json(newProducts)
 })
+
+
+
+
+
 app.get('/:productId', (req, res) => {
     const {productId} = req.params
     const singleProducts = products.find((product) => 
